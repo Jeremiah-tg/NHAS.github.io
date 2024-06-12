@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NHAAS</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" ></script>
+     <link rel="stylesheet" href="leaflet-routing-machine-3.2.12/dist/leaflet-routing-machine.css" />
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  </head>
+  <body>
+    <a href="home.html"><i class="fa fa-home" style="font-size:48px;color:green" style="position:absolute;z-index:3;"></i></a>
+    <div id="map"></div>
+  </body>
+</html>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" ></script>
+ <script src="leaflet-routing-machine-3.2.12/dist/leaflet-routing-machine.js"></script>
+<script>
+  // const apiKey ='pk.eyJ1IjoiamVyZW1pYWgyMDIyIiwiYSI6ImNseGIwMW9meDF3dXcyanNjMDNnb2F6bWEifQ.m9KTfbjMDwKs_-8PNXA0Og';
+
+  var map = L.map('map').setView([0.31337153096993026, 32.595326392375796],15);
+
+  var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">Jeremiah</a> contributors'
+  }).addTo(map);
+  // L.marker([51.5, -0.09]).addTo(map)
+  //   .bindPopup('A pretty CSS popup.<br> Easily customizable.')
+  //   .openPopup();
+  //   osm.addTo(map);
+
+    if(!navigator.geolocation){
+      console.log("Your Browser doesnt support geolocation feature!")
+    }else{
+      setInterval(() => {
+        navigator.geolocation.getCurrentPosition(getPosition)
+      }, 5000);
+    }
+
+    var marker, circle;
+
+    function getPosition(position){
+      console.log(position)
+      var lat = position.coords.latitude
+      var long = position.coords.longitude
+      var accuracy = position.coords.accuracy
+      var timestamp = position.coords.timestamp
+
+      if(marker){
+        map.removeLayer(marker)
+      }
+      if(circle){
+        map.removeLayer(circle)
+      }
+
+      marker = L.marker([lat, long])
+      circle = L.circle([lat, long], {radius: 100})
+
+      var featureGroup = L.featureGroup([marker, circle]).addTo(map)
+
+      map.fitBounds(featureGroup.getBounds())
+
+      console.log("Your coordinate is: Lat "+ lat+ " Long: "+ long +" Accurac: "+ accuracy)
+    }
+
+// custome icon
+  var warehousIcon = L.icon({
+    iconUrl: 'img/icon.png',
+    iconSize: [50, 50],
+    iconAnchor:[20,40],
+    popupAchcor:[-3,-50]
+  });
+  // routing the locations
+
+    var princech = L.marker([0.3185496651369006, 32.57022085825385], {icon: warehousIcon}).addTo(map);
+    princech.bindPopup('<h2 style="text-align: center;"><a style="text-decoration: none;" href="#">Alferds WareHouse</a></h2><p style="text-align: justify;">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</br>There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain...</p><img width="100%" height="50%" style="border-radius:5px;" src="img/wh1.jpeg"/>')
+    var princech = L.marker([0.3189323884516455, 32.56664581941813], {icon: warehousIcon}).addTo(map);
+    princech.bindPopup('<h2 style="text-align: center;"><a style="text-decoration: none;" href="#">Alferds WareHouse</a></h2><p style="text-align: justify;">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</br>There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain...</p><img width="100%" height="50%" style="border-radius:5px;" src="img/wh1.jpeg"/>')
+    var unhcr = L.marker([0.3305175371333986, 32.615677765711695], {icon: warehousIcon}).addTo(map);
+    unhcr.bindPopup('<h2 style="text-align: center;"><a style="text-decoration: none;" href="#">Alferds WareHouse</a></h2><p style="text-align: justify;">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</br>There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain...</p><img width="100%" height="50%" style="border-radius:5px;" src="img/wh1.jpeg"/>')
+    var wh2 = L.marker([0.3424968461364867, 32.56937092232981], {icon: warehousIcon}).addTo(map);
+    wh2.bindPopup('<h2 style="text-align: center;"><a style="text-decoration: none;" href="#">Alferds WareHouse</a></h2><p style="text-align: justify;">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</br>There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain...</p><img width="100%" height="50%" style="border-radius:5px;" src="img/wh1.jpeg"/>')
+    var wh3 = L.marker([0.32817868955856894, 32.613167218360395], {icon: warehousIcon}).addTo(map);
+    wh3.bindPopup('<h2 style="text-align: center;"><a style="text-decoration: none;" href="#">Alferds WareHouse</a></h2><p style="text-align: justify;">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</br>There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain...</p><img width="100%" height="50%" style="border-radius:5px;" src="img/wh1.jpeg"/>')
+    var wh4 = L.marker([0.34377551783395205, 32.57316894946779], {icon: warehousIcon}).addTo(map);
+    wh4.bindPopup('<h2 style="text-align: center;"><a style="text-decoration: none;" href="#">Alferds WareHouse</a></h2><p style="text-align: justify;">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</br>There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain...</p><img width="100%" height="50%" style="border-radius:5px;" src="img/wh1.jpeg"/>')
+    var wh5 = L.marker([0.3415835091052472, 32.57313089308365], {icon: warehousIcon}).addTo(map);
+    wh5.bindPopup('<h2 style="text-align: center;"><a style="text-decoration: none;" href="#">Alferds WareHouse</a></h2><p style="text-align: justify;">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</br>There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain...</p><img width="100%" height="50%" style="border-radius:5px;" src="img/wh1.jpeg"/>')
+    var wh6 = L.marker([0.3409898399883807, 32.56971342978714], {icon: warehousIcon}).addTo(map);
+    wh6.bindPopup('<h2 style="text-align: center;"><a style="text-decoration: none;" href="#">Alferds WareHouse</a></h2><p style="text-align: justify;">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</br>There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain...</p><img width="100%" height="50%" style="border-radius:5px;" src="img/wh1.jpeg"/>')
+    var wh7 = L.marker([0.347398420044847, 32.57271227285802], {icon: warehousIcon}).addTo(map);
+    wh7.bindPopup('<h2 style="text-align: center;"><a style="text-decoration: none;" href="#">Alferds WareHouse</a></h2><p style="text-align: justify;">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</br>There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain...</p><img width="100%" height="50%" style="border-radius:5px;" src="img/wh1.jpeg"/>')
+    var wh8 = L.marker([0.3452520789858267, 32.576068845939886], {icon: warehousIcon}).addTo(map);
+    wh8.bindPopup('<h2 style="text-align: center;"><a style="text-decoration: none;" href="#">Alferds WareHouse</a></h2><p style="text-align: justify;">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</br>There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain...</p><img width="100%" height="50%" style="border-radius:5px;" src="img/wh1.jpeg"/>')
+
+
+
+
+</script>
